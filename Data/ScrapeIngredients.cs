@@ -6,28 +6,23 @@ namespace InstaPrep.Data
 {
     public class ScrapeIngredients
     {
-        public static List<string>? GetIngredients( string filePath )
+        public static List<string>? GetIngredients(string filePath)
         {
             List<string> list = new List<string>();
             StreamReader reader = File.OpenText(filePath);
-            string? line;
-            int counter = 0;
-            while ((line = reader.ReadLine()) !=  null) 
-            {
-                string[] items = line.Split("<li itemprop=\"ingredients\" class=\"ingredient\">");
-                if (items.Length > 1)
-                {
-                    list.Add(items[1]);
-                    counter++;
-                }
-            }
 
-            if(counter < 1)
+            HtmlDocument recipeDocument = new HtmlDocument();
+            recipeDocument.Load(filePath);
+            try
+            {
+                HtmlNode[] nodes = recipeDocument.DocumentNode.SelectNodes("//li[@class='ingredient']").ToArray();
+                return nodes.Select((x) => { return x.InnerHtml; }).ToList();
+            }
+            catch (Exception e)
             {
                 return null;
             }
 
-            return list;
         }
 
         private static (List<string>, int) GetsAny(string haystack, List<string> needles)
@@ -65,7 +60,6 @@ namespace InstaPrep.Data
             var measurements = GetsAny(ingredient.ToLower(), Measurements.GetAmounts());
 
             int last = Math.Max(ingredients.Item2, measurements.Item2);
-            //string name = ingredient.Substring(ingredients.Item2, ingredient.Length - 1);
 
             return new RecipeIngredient() { 
                 Title = ingredient.Substring(ingredients.Item2),
