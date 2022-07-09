@@ -14,7 +14,7 @@ namespace InstaPrep.Migrations
                 databaseContext.Recipes.AddRange(recipes);
                 foreach (var recipe in recipes)
                 {
-                    databaseContext.RecipeIngredient.AddRange(recipe.IngredientsList);
+                    databaseContext.RecipeIngredients.AddRange(recipe.IngredientsList);
                 }
                 databaseContext.SaveChanges();
             }

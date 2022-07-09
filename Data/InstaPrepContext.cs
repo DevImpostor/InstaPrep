@@ -14,6 +14,7 @@ namespace InstaPrep.Data
         }
 
         public DbSet<Recipe>? Recipes { get; set; }
+        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,7 +27,13 @@ namespace InstaPrep.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        /// <summary>
+        internal static InstaPrepContext CreateContext()
+        {
+            return new InstaPrepContext(
+                new DbContextOptionsBuilder<InstaPrepContext>()
+                .UseSqlite($"Data Source={nameof(InstaPrepContext.InstaPrepDb)}.db").Options);
+        } 
+
         /// Dispose pattern.
         /// </summary>
         public override void Dispose()

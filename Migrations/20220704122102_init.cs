@@ -28,7 +28,7 @@ namespace InstaPrep.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecipeIngredient",
+                name: "RecipeIngredients",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
@@ -50,14 +50,14 @@ namespace InstaPrep.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_RecipeIngredient_RecipeId",
-                table: "RecipeIngredient",
+                table: "RecipeIngredients",
                 column: "RecipeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RecipeIngredient");
+                name: "RecipeIngredients");
 
             migrationBuilder.DropTable(
                 name: "Recipes");

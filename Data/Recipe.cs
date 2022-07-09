@@ -10,7 +10,7 @@ namespace InstaPrep.Data
 		public string Duration { get; set; } = string.Empty;
 		public string Effort { get; set; } = string.Empty;
 
-		public List<Ingredients> IngredientsList = new List<Ingredients>();
+		public List<RecipeIngredient> IngredientsList = new List<RecipeIngredient>();
 
 		public Recipe()
 		{

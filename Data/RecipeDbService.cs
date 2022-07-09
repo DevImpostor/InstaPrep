@@ -26,7 +26,7 @@ namespace InstaPrep.Data
                     where r.Id == id
                     select r).ToList()[0];
 
-            var ingredients = (from r in _context.RecipeIngredient
+            var ingredients = (from r in _context.RecipeIngredients
                                where r.RecipeId == recipe.Id
                                select r);
             recipe.IngredientsList = ingredients.ToList();

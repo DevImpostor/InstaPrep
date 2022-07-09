@@ -14,19 +14,19 @@ namespace InstaPrep.Data
                 Duration = "1-2 Hours",
                 Effort = "Easy",
                 Rating = "2",
-                IngredientsList = new List<Ingredients>()
+                IngredientsList = new List<RecipeIngredient>()
                 {
-                    new Ingredients()
+                    new RecipeIngredient()
                     {
                         Title = "Garlic",
                         Measure = "4 cloves"
                     },
-                    new Ingredients()
+                    new RecipeIngredient()
                     {
                         Title = "Lime Juice",
                         Measure = "2 tbsp"
                     },
-                    new Ingredients()
+                    new RecipeIngredient()
                     {
                         Title = "Salt",
                         Measure = "3/4 tsp"

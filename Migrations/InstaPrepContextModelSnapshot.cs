@@ -81,7 +81,7 @@ namespace InstaPrep.Migrations
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeIngredient");
+                    b.ToTable("RecipeIngredients");
                 });
 
             modelBuilder.Entity("InstaPrep.Data.RecipeIngredient", b =>
