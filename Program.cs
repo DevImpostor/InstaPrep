@@ -11,18 +11,18 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
 
-builder.Services.AddSingleton<IDataService, DataService>();
+
+
 builder.Services.AddDbContextFactory<InstaPrepContext>(opt =>
     opt.UseSqlite($"Data Source={nameof(InstaPrepContext.InstaPrepDb)}.db"));
 
-
+builder.Services.AddScoped<IDataService, RecipeDbService>();
 
 
 var app = builder.Build();
 
 await using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateAsyncScope();
 var options = scope.ServiceProvider.GetRequiredService<DbContextOptions<InstaPrepContext>>();
-await InstaPrep.DatabaseUtility.EnsureDbCreatedAndSeedWithCountOfAsync(options, 500);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
