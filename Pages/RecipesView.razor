@@ -36,50 +36,58 @@
                 </MudStack>
                 @* --- Photo --- *@
                 <MudImage ObjectFit="ObjectFit.Cover"
-                            Class="rounded-lg"
-                            Src="@CurrentRecipe.ImageUrl"
-                            Style="width:100%; height:155px" />
+                          Class="rounded-lg"
+                          Src="@CurrentRecipe.ImageUrl"
+                          Style="width:100%; height:155px" />
             </MudPaper>
         </MudStack>
     </MudItem>
 
     @* --- List --- *@
-<MudItem xs="12" md="6">
-    <MudStack>
-        @* --- Title --- *@
-        <MudText Typo="Typo.h4">Ingredients</MudText>
+    <MudItem xs="12" md="6">
+        <MudStack>
+            @* --- Title --- *@
+            <MudStack Row="true">
+                <MudText Typo="Typo.h4">Ingredients</MudText>
+                <MudButton Variant="Variant.Outlined" OnClick="@(() => OpenDrawer(Anchor.End))">Add</MudButton>
+            </MudStack>
 
-        <MudDivider DividerType="DividerType.Middle" Class="my-6"/>
+            <MudDivider DividerType="DividerType.Middle" Class="my-6" />
 
-        <MudList Clickable="false" >
+            <MudList Clickable="false">
 
-            @foreach (var ingredient in CurrentRecipe.IngredientsList)
+                @foreach (var ingredient in CurrentRecipe.IngredientsList)
                 {
 
-      
-            <MudListItem>
-                <MudGrid>
-                    @* --- Title --- *@
-                    <MudItem xs="10">
-                        <MudStack AlignItems="AlignItems.Center" Row="true">
-                            <MudCheckBox Checked="@false"></MudCheckBox>
-                            <MudText>@ingredient.Title</MudText>
-                        </MudStack>
-                    </MudItem>
 
-                    @* --- Measure --- *@
-                    <MudItem xs="2">
-                        <MudText>@ingredient.Measure</MudText>
-                    </MudItem>
-                </MudGrid>
-            </MudListItem>
+                    <MudListItem>
+                        <MudGrid>
+                            @* --- Title --- *@
+                            <MudItem xs="10">
+                                <MudStack AlignItems="AlignItems.Center" Row="true">
+                                    <MudCheckBox Checked="@false"></MudCheckBox>
+                                    <MudText>@ingredient.Title</MudText>
+                                </MudStack>
+                            </MudItem>
+
+                            @* --- Measure --- *@
+                            <MudItem xs="2">
+                                <MudText>@ingredient.Measure</MudText>
+                            </MudItem>
+                        </MudGrid>
+                    </MudListItem>
                 }
 
-        </MudList>
+            </MudList>
 
-    </MudStack>
-</MudItem>
-
+        </MudStack>
+    </MudItem>
+    <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Add Ingredient</MudText>
+        </MudDrawerHeader>
+        <RecipeIngredient OpenAddIngredient="() => CloseDrawer()" />
+    </MudDrawer>
 
 </MudGrid>
 
@@ -89,6 +97,21 @@
     public string RecipeId { get; set; } = string.Empty;
 
     private Recipe? CurrentRecipe = null;
+
+    private bool open;
+    private Anchor anchor;
+
+    void OpenDrawer(Anchor anchor)
+    {
+        open = true;
+        this.anchor = anchor;
+    }
+    void CloseDrawer()
+    {
+        open = false;
+        StateHasChanged();
+
+    }
 
 
     protected override void OnParametersSet()
@@ -110,5 +133,5 @@
 
         }
     }
-    
+
 }
