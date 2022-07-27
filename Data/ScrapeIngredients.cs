@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace InstaPrep.Data
 {
-    public class ScrapeIngredients : IEntityTypeConfiguration<Recipe>
+    public class ScrapeIngredients
     {
         // .  recipeingredient row selector 
         // Get image
@@ -18,13 +18,13 @@ namespace InstaPrep.Data
         /// <param name="recipeDocument"></param>
         /// <returns>List of ingredients as strings from html form</returns>
         /// 
-        public static byte[] GetImage(HtmlDocument recipeDocument) 
+        public static byte[] GetImage(HtmlDocument recipeDocument)
         {
             WebClient webClient = new WebClient();
             var imList = recipeDocument.DocumentNode.SelectNodes("//img[@class='recipe-image']").ToList();
-           // imList.Where(x => x.GetAttributeValue("src", "nothing").Contains("")).GetAttributeValue("src", "nothing");
+            // imList.Where(x => x.GetAttributeValue("src", "nothing").Contains("")).GetAttributeValue("src", "nothing");
             var src = imList[1].GetAttributeValue("src", "").Substring(2);
-            byte[] image = webClient.DownloadData("http://"+src);
+            byte[] image = webClient.DownloadData("http://" + src);
 
             return image;
         }
@@ -35,13 +35,14 @@ namespace InstaPrep.Data
             {
                 var image = recipeDocument.DocumentNode.SelectNodes("//img[@class='recipe-image row']").ToList();
                 return image[0].GetAttributeValue("src", "nothing");
-            } catch( Exception E)
+            }
+            catch (Exception E)
             {
                 return "";
             }
         }
 
-        public static List<string>? GetIngredients( HtmlDocument recipeDocument  )
+        public static List<string>? GetIngredients(HtmlDocument recipeDocument)
         {
             try
             {
@@ -59,51 +60,33 @@ namespace InstaPrep.Data
             return recipeDocument.DocumentNode.SelectNodes("//h3[@class='recipe-name']//a").First().InnerHtml;
         }
 
-
-        // returns a list of strings found based on
-        private static (List<string>, int) GetsAny(string haystack, List<string> needles)
-        {
-            List<string> foundVals = new List<string>();
-            int index = -1;
-            int s_index = 0;
-            string last = "";
-            foreach (string needle in needles)
-            {
-                if ((index = haystack.IndexOf( needle+" ")) != -1)
-                {
-                    foundVals.Add(needle);
-                    if (index > s_index)
-                    {
-                        s_index = index;
-                        last = needle;
-                    }
-                    //s_index = Math.Max(index, s_index);
-                }
-                    
-            }
-
-            return (foundVals, s_index + last.Length);
-        }
-
-        // Gets Very last measurement and splits based on this
-        // then returning an ingredient
         private static RecipeIngredient ParseIngredient(string ingredient)
         {
-            if(String.IsNullOrEmpty(ingredient)){
-                return new RecipeIngredient();
+            RecipeIngredient r = new RecipeIngredient();
+            var list = ingredient.Split(" ").ToList();
+            var measure = "";
+            var amount = "";
+
+            // ToList() because we are mutating data in this loop
+            foreach (var l in list.ToList())
+            {
+                if (Measurements.GetMeasurements().Contains(l))
+                {
+                    measure = l;
+                    list.Remove(l);
+                }
+
+                if (Measurements.GetAmounts().Contains(l))
+                {
+                    amount = l;
+                    list.Remove(l);
+                }
             }
 
-            // Finds all keywords of measurements
-            var measurements = GetsAny(ingredient.ToLower(), Measurements.GetMeasurements());
-            var amounts = GetsAny(ingredient.ToLower(), Measurements.GetAmounts());
 
-            int last = Math.Max(measurements.Item2, amounts.Item2);
-            //string name = ingredient.Substring(ingredients.Item2, ingredient.Length - 1);
-
-            return new RecipeIngredient() { 
-                Title = ingredient.Substring(measurements.Item2),
-                Measure = String.Join(" ", amounts.Item1) +  " " + String.Join(" ", measurements.Item1)
-            };
+            r.Measure = amount + " " + measure;
+            r.Title = string.Join(" ", list);
+            return r;
         }
 
         public static List<Recipe> Scrape()
@@ -117,7 +100,7 @@ namespace InstaPrep.Data
                 for (int j = 0; j < 15; j++)
                 {
                     StreamReader reader = File.OpenText("Scrape/American/" + i.ToString() + ";" + j.ToString() + ".html");
-                    
+
                     HtmlDocument recipeDocument = new HtmlDocument();
                     recipeDocument.Load(reader);
 
@@ -125,17 +108,17 @@ namespace InstaPrep.Data
                     if (ingredients != null)
                     {
                         allRecipes.Add(new Recipe());
-                       
+
                         foreach (var ingredient in ingredients)
                         {
-                            
+
                             var parsed = ParseIngredient(ingredient);
                             allIngredients.Add(parsed);
-                           
+
                             Console.WriteLine(parsed.Title + ": " + parsed.Measure);
                         }
 
-                        foreach(var ingredient in allIngredients)
+                        foreach (var ingredient in allIngredients)
                         {
                             ingredient.RecipeId = allRecipes.Last().Id;
                         }
@@ -157,13 +140,6 @@ namespace InstaPrep.Data
             }
 
             return allRecipes;
-        }
-
-        public void Configure(EntityTypeBuilder<Recipe> builder)
-        {
-            var allRecipes = Scrape();
-
-            builder.HasData(allRecipes);
         }
     }
 }

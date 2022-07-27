@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vincent\\Desktop\\InstaPrepCopy\\InstaPrep.csproj": {}
+    "C:\\Users\\Vincent\\Desktop\\InstaPrep\\InstaPrep.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vincent\\Desktop\\InstaPrepCopy\\InstaPrep.csproj": {
+    "C:\\Users\\Vincent\\Desktop\\InstaPrep\\InstaPrep.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vincent\\Desktop\\InstaPrepCopy\\InstaPrep.csproj",
+        "projectUniqueName": "C:\\Users\\Vincent\\Desktop\\InstaPrep\\InstaPrep.csproj",
         "projectName": "InstaPrep",
-        "projectPath": "C:\\Users\\Vincent\\Desktop\\InstaPrepCopy\\InstaPrep.csproj",
+        "projectPath": "C:\\Users\\Vincent\\Desktop\\InstaPrep\\InstaPrep.csproj",
         "packagesPath": "C:\\Users\\Vincent\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vincent\\Desktop\\InstaPrepCopy\\obj\\",
+        "outputPath": "C:\\Users\\Vincent\\Desktop\\InstaPrep\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
