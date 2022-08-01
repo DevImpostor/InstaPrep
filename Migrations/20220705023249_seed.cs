@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using InstaPrep.Data;
+using InstaPrep.Data.Scrapers;
 #nullable disable
 
 namespace InstaPrep.Migrations
@@ -10,7 +11,7 @@ namespace InstaPrep.Migrations
         {
             using (var databaseContext = InstaPrepContext.CreateContext())
             {
-                var recipes = ScrapeIngredients.Scrape();
+                var recipes = new TheRecipeDepository().Seed();
                 databaseContext.Recipes.AddRange(recipes);
                 foreach (var recipe in recipes)
                 {

@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject IDialogService DialogService
+@using InstaPrep.Data.Scrapers
 
 <MudThemeProvider IsDarkMode="@_isDarkMode" />
 <MudDialogProvider />
@@ -45,7 +46,8 @@
     void ImportRecipe()
     {
         var dialog = DialogService.Show<ImportDialog>("Import Recipe");
-        @*var result = await dialog.Result;
+        
+    @*var result = await dialog.Result;
 
         if (!result.Cancelled)
         {
