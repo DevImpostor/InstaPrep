@@ -1,4 +1,7 @@
 ﻿using InstaPrep.Data;
+
+using InstaPrep.Data.Scrapers;
+
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
@@ -10,8 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
-
-
 
 builder.Services.AddDbContextFactory<InstaPrepContext>(opt =>
     opt.UseSqlite($"Data Source={nameof(InstaPrepContext.InstaPrepDb)}.db"));

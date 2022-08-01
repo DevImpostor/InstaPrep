@@ -124,3 +124,4 @@ C:\Users\Vincent\Desktop\InstaPrepCopy\obj\Debug\net6.0\scopedcss\bundle\InstaPr
 C:\Users\Vincent\Desktop\InstaPrepCopy\obj\Debug\net6.0\InstaPrep.csproj.CopyComplete
 C:\Users\Vincent\Desktop\InstaPrepCopy\obj\Debug\net6.0\InstaPrep.genruntimeconfig.cache
 C:\Users\Vincent\Desktop\InstaPrepCopy\obj\Debug\net6.0\ref\InstaPrep.dll
+C:\Users\Vincent\Desktop\InstaPrep\bin\Debug\net6.0\Newtonsoft.Json.dll

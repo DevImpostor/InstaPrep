@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KyE+DufkECKyq7i4/BWbNIn5CVk7mur/FYXSqMXaG38kgkA54+EfODJzeViLEiR4Fp86ZBaupC2qtI2NACGsFw==",
+  "dgSpecHash": "IiMOVjGi/WE102jw6LEIRb6fCmRzdEFAb/EhoxdCj/7+mL7b1wmgJUDmlYS3499DAmBjbNG1KGykaKyNDuNcMw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Vincent\\Desktop\\InstaPrep\\InstaPrep.csproj",
   "expectedPackageFiles": [
@@ -33,6 +33,7 @@
     "C:\\Users\\Vincent\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\Vincent\\.nuget\\packages\\microsoft.jsinterop\\6.0.3\\microsoft.jsinterop.6.0.3.nupkg.sha512",
     "C:\\Users\\Vincent\\.nuget\\packages\\mudblazor\\6.0.9\\mudblazor.6.0.9.nupkg.sha512",
+    "C:\\Users\\Vincent\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\Vincent\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.0.6\\sqlitepclraw.bundle_e_sqlite3.2.0.6.nupkg.sha512",
     "C:\\Users\\Vincent\\.nuget\\packages\\sqlitepclraw.core\\2.0.6\\sqlitepclraw.core.2.0.6.nupkg.sha512",
     "C:\\Users\\Vincent\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.6\\sqlitepclraw.lib.e_sqlite3.2.0.6.nupkg.sha512",

@@ -1,14 +1,13 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.IO;
-using InstaPrep.Data;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace InstaPrep.Data
+namespace InstaPrep.Data.Scrapers
 {
-    public class ScrapeIngredients
+    public class TheRecipeDepository : IRecipeScraper
     {
         // .  recipeingredient row selector 
         // Get image
@@ -18,18 +17,17 @@ namespace InstaPrep.Data
         /// <param name="recipeDocument"></param>
         /// <returns>List of ingredients as strings from html form</returns>
         /// 
-        public static byte[] GetImage(HtmlDocument recipeDocument)
+        public byte[] GetImage(HtmlDocument recipeDocument)
         {
             WebClient webClient = new WebClient();
             var imList = recipeDocument.DocumentNode.SelectNodes("//img[@class='recipe-image']").ToList();
-            // imList.Where(x => x.GetAttributeValue("src", "nothing").Contains("")).GetAttributeValue("src", "nothing");
             var src = imList[1].GetAttributeValue("src", "").Substring(2);
             byte[] image = webClient.DownloadData("http://" + src);
 
             return image;
         }
 
-        public static string GetImageSrc(HtmlDocument recipeDocument)
+        public string GetImageSrc(HtmlDocument recipeDocument)
         {
             try
             {
@@ -42,7 +40,7 @@ namespace InstaPrep.Data
             }
         }
 
-        public static List<string>? GetIngredients(HtmlDocument recipeDocument)
+        public List<string>? GetIngredients(HtmlDocument recipeDocument)
         {
             try
             {
@@ -55,7 +53,7 @@ namespace InstaPrep.Data
             }
         }
 
-        private static string GetTitle(HtmlDocument recipeDocument)
+        public string GetTitle(HtmlDocument recipeDocument)
         {
             return recipeDocument.DocumentNode.SelectNodes("//h3[@class='recipe-name']//a").First().InnerHtml;
         }
@@ -89,7 +87,49 @@ namespace InstaPrep.Data
             return r;
         }
 
-        public static List<Recipe> Scrape()
+        public Recipe Scrape(HtmlDocument recipeDocument)
+        {
+            var recipe = new Recipe();
+            var allIngredients = new List<RecipeIngredient>();
+
+            var ingredients = GetIngredients(recipeDocument);
+
+            if (ingredients != null)
+            {
+                foreach (var ingredient in ingredients)
+                {
+
+                    var parsed = ParseIngredient(ingredient);
+                    allIngredients.Add(parsed);
+
+                    Console.WriteLine(parsed.Title + ": " + parsed.Measure);
+                }
+
+                foreach (var ingredient in allIngredients)
+                {
+                    ingredient.RecipeId = recipe.Id;
+                }
+
+
+                // We place some "dummy" data here along with the list of Recipe ingredients 
+                recipe.IngredientsList = allIngredients;
+                recipe.Duration = "5 mins";
+                recipe.Rating = "3";
+                recipe.Effort = "4";
+
+                recipe.Title = GetTitle(recipeDocument);
+                recipe.ImageUrl = GetImageSrc(recipeDocument);
+            }
+            else
+            {
+                recipe.Title = "No Recipe Found at this Address";
+                return recipe;
+            }
+
+            return recipe;
+        }
+
+        public List<Recipe> Seed()
         {
             var allIngredients = new List<RecipeIngredient>();
             var allRecipes = new List<Recipe>();
@@ -111,11 +151,8 @@ namespace InstaPrep.Data
 
                         foreach (var ingredient in ingredients)
                         {
-
                             var parsed = ParseIngredient(ingredient);
                             allIngredients.Add(parsed);
-
-                            Console.WriteLine(parsed.Title + ": " + parsed.Measure);
                         }
 
                         foreach (var ingredient in allIngredients)
