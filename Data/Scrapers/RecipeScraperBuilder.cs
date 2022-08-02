@@ -24,7 +24,8 @@ namespace InstaPrep.Data.Scrapers
         {
             { "https://somedumbass-site.com", nameof(InstaPrep.Data.Scrapers.Scraper) },
             {"https://www.therecipedepository.com", "InstaPrep.Data.Scrapers.TheRecipeDepository"},
-            {"https://www.allrecipes.com", "InstaPrep.Data.Scrapers.JsonLd" }
+            {"https://www.allrecipes.com", "InstaPrep.Data.Scrapers.JsonLd"},
+            {"https://www.simplyrecipes.com", "InstaPrep.Data.Scrapers.SimplyRecipes" }
         };
 
         public RecipeScraperBuilder(string url)
@@ -36,6 +37,7 @@ namespace InstaPrep.Data.Scrapers
             recipeDocument.LoadHtml(htmlString);
 
             Result = Scraper.Scrape(recipeDocument);
+            Result.IngredientsList = Result.IngredientsList.Select(x => ParseIngredient(x.Title)).ToList();
         }
 
         private string GetBaseUrl(string url)

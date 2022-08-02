@@ -8,27 +8,27 @@ using Newtonsoft.Json.Linq;
 
 namespace InstaPrep.Data.Scrapers
 {
-    class JsonLd : IRecipeScraper
+    public class JsonLd : IRecipeScraper
     {
-        private string GetTitle(JToken token)
+        protected string GetTitle(JToken token)
         {
 
             return token["name"].ToString();
         }
 
-        private List<RecipeIngredient> GetIngredients(JToken token)
+        protected List<RecipeIngredient> GetIngredients(JToken token)
         {
             var ingredients = JArray.Parse(token["recipeIngredient"].ToString());
             var ing = ingredients.Children().Select((x) => { return new RecipeIngredient() { Title = x.ToString() }; });
             return ing.ToList();
         }
 
-        private string GetDirections(JToken token)
+        protected string GetDirections(JToken token)
         {
             return token["directions"].ToString();
         }
 
-        public Recipe Scrape(HtmlDocument recipeDoc)
+        public virtual Recipe Scrape(HtmlDocument recipeDoc)
         {
             var node = recipeDoc.DocumentNode.SelectSingleNode("//script[@type='application/ld+json']");
 
@@ -39,7 +39,7 @@ namespace InstaPrep.Data.Scrapers
 
             var Json = JArray.Parse(node.InnerHtml);
 
-            JToken recipeObject = Json.Children().Where(x => { return x["@type"].ToString() == "Recipe"; }).FirstOrDefault();
+            JToken recipeObject = Json.Children().Where(x => { return x["@type"].ToString().Contains("Recipe"); }).FirstOrDefault();
             Recipe r = new Recipe();
 
             r.IngredientsList = GetIngredients(recipeObject);
