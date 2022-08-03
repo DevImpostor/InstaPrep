@@ -63,6 +63,11 @@ namespace InstaPrep.Data
 		{
 		}
 
+        public Recipe AddRecipe(Recipe r)
+        {
+            return r;
+        }
+
         public List<Recipe> GetRecipes()
         {
             return AllRecipes;

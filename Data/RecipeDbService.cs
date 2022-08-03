@@ -20,14 +20,16 @@ namespace InstaPrep.Data
             return recipes;
         }
 
-        public void AddRecipe(Recipe r)
+        public Recipe AddRecipe(Recipe r)
         {
             _context.Add(r);
             r.IngredientsList = r.IngredientsList.Select(x => { x.RecipeId = r.Id; return x; }).ToList();
-            _context.AddRange(r);
+            _context.AddRange(r.IngredientsList);
 
             _context.SaveChanges();
+            return r;
         }
+
         public Recipe GetRecipeById(string id)
         {
             var recipe = (from r in _context.Recipes
