@@ -1,5 +1,8 @@
 ﻿@inject ISnackbar Snackbar
 @using InstaPrep.Data.Scrapers;
+@using InstaPrep.Data;
+@inject IDataService dataService
+@inject NavigationManager NavManager
 
 <MudDialog>
     <TitleContent>
@@ -33,9 +36,12 @@
 
         var test = urlToImport;
         var recipeScraper = new RecipeScraperBuilder(urlToImport);
+        var recipe = dataService.AddRecipe(recipeScraper.Result);
+        
         //In a real world scenario this bool would probably be a service to delete the item from api/database
-        Snackbar.Add("Server Deleted", Severity.Success);
-        MudDialog.Close(DialogResult.Ok(""));
+        //Snackbar.Add("Server Deleted", Severity.Success);
+        //MudDialog.Close(DialogResult.Ok(""));
+        NavManager.NavigateTo("/recipe/" + recipe.Id);
     }
 
 }

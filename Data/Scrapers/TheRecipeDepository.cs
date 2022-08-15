@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using InstaPrep.Data.Models;
 
 namespace InstaPrep.Data.Scrapers
 {

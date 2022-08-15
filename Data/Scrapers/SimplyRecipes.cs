@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using InstaPrep.Data.Models;
 using Newtonsoft.Json.Linq;
 namespace InstaPrep.Data.Scrapers
 {
