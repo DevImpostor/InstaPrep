@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using InstaPrep.Data;
+using InstaPrep.Data.Models;
 
 namespace InstaPrep.Data
 {
@@ -18,11 +18,7 @@ namespace InstaPrep.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // this property isn't on the C# class
-            // so we set it up as a "shadow" property and use it for concurrency
-            modelBuilder.Entity<Ingredients>()
-                .Property<byte[]>(RowVersion)
-                .IsRowVersion();
+
 
             base.OnModelCreating(modelBuilder);
         }

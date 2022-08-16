@@ -1,9 +1,11 @@
 ﻿namespace InstaPrep.Data
 {
-    public class Measurement
+    public abstract class MeasurementType
     {
-        public string? Name { get; set; }
-        public int Amount { get; set; }
-        public string? MeasureMethod { get; set; }
+        public virtual string? Name { get; set; }
+        public virtual bool IsVolume { get; set; }
+        public virtual bool IsWeight { get; set; }
+        public virtual bool IsOtherMeasurement { get; set; }
+
     }
 }

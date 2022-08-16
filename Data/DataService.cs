@@ -1,8 +1,9 @@
-﻿using System;
+﻿using InstaPrep.Data.Models;
+using System;
 
 namespace InstaPrep.Data
 {
-	public class DataService : IDataService
+    public class DataService : IDataService
 	{
 
         private List<Recipe> AllRecipes { get; set; } = new List<Recipe>()

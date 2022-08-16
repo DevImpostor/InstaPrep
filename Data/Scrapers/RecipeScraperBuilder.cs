@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using HtmlAgilityPack;
+using InstaPrep.Data.Models;
 
 namespace InstaPrep.Data.Scrapers
 {
