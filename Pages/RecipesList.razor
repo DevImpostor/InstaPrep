@@ -26,8 +26,8 @@
                     <MudItem xs="8">
                         <MudGrid Spacing="1">
                             @*--- Title ----*@
-                            <MudItem xs="12">
-                                <MudText Style="font-weight:600">@recipe.Title</MudText>
+                            <MudItem Style="overflow: hidden; text-overflow: ellipsis; width: 200px; height: 50px" xs="12">
+                                <MudText Style="font-weight:600" Class="overflow-hidden">@recipe.Title</MudText>
                             </MudItem>
 
                             @*--- Rating ----*@

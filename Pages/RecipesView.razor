@@ -15,23 +15,21 @@
                 @* --- Metrics --- *@
                 <MudStack Justify="Justify.SpaceEvenly" Row="true">
                     <MudStack Justify="Justify.SpaceAround" Spacing="0">
-                        <MudText>Prep Time</MudText>
-                        <MudText Color="Color.Secondary">25 mins</MudText>
+                        <MudItem>
+                                <MudRating MaxValue="3" SelectedValue="2" />
+                            </MudItem>
                     </MudStack>
                     <MudDivider Vertical="true" FlexItem="true" />
                     <MudStack Justify="Justify.SpaceAround" Spacing="0">
-                        <MudText>Cook Time</MudText>
-                        <MudText Color="Color.Secondary">45 mins</MudText>
+                        <MudItem>
+                                <MudChip Icon="@Icons.Filled.GroupWork" Color="Color.Primary">4</MudChip>
+                            </MudItem>
                     </MudStack>
                     <MudDivider Vertical="true" FlexItem="true" />
                     <MudStack Justify="Justify.SpaceAround" Spacing="0">
-                        <MudText>Marinating</MudText>
-                        <MudText Color="Color.Secondary">2 hours</MudText>
-                    </MudStack>
-                    <MudDivider Vertical="true" FlexItem="true" />
-                    <MudStack Justify="Justify.SpaceAround" Spacing="0">
-                        <MudText>Total Time</MudText>
-                        <MudText Color="Color.Secondary">3 hours 10 mins</MudText>
+                        <MudItem>
+                                <MudChip Icon="@Icons.Filled.Timelapse" Color="Color.Primary">5 mins</MudChip>
+                            </MudItem>
                     </MudStack>
                 </MudStack>
                 @* --- Photo --- *@
@@ -63,7 +61,7 @@
                     <MudListItem>
                         <MudGrid>
                             @* --- Title --- *@
-                            <MudItem xs="10">
+                            <MudItem xs="4">
                                 <MudStack AlignItems="AlignItems.Center" Row="true">
                                     <MudCheckBox Checked="@false"></MudCheckBox>
                                     <MudText>@ingredient.Title</MudText>
@@ -71,8 +69,13 @@
                             </MudItem>
 
                             @* --- Measure --- *@
-                            <MudItem xs="2">
+                            <MudItem xs="4">
                                 <MudText>@ingredient.Measure</MudText>
+                            </MudItem>
+
+                            @* --- Method --- *@
+                            <MudItem xs="4">
+                                <MudText Color=Color.Primary>///chopped</MudText>
                             </MudItem>
                         </MudGrid>
                     </MudListItem>
@@ -92,7 +95,7 @@
 </MudGrid>
 
 @code{
-
+  
     [Parameter]
     public string RecipeId { get; set; } = string.Empty;
 
@@ -133,5 +136,4 @@
 
         }
     }
-
 }
