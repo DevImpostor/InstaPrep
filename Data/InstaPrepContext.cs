@@ -14,15 +14,14 @@ namespace InstaPrep.Data
         }
 
         public DbSet<Recipe>? Recipes { get; set; }
+        public DbSet<Ingredient> _Ingredients { get; set; }
         public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // this property isn't on the C# class
             // so we set it up as a "shadow" property and use it for concurrency
-            modelBuilder.Entity<Ingredients>()
-                .Property<byte[]>(RowVersion)
-                .IsRowVersion();
+
 
             base.OnModelCreating(modelBuilder);
         }

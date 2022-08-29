@@ -6,7 +6,11 @@
 
 <PageTitle>My Recipes</PageTitle>
 
-<MudText Typo="Typo.h4" Class="mb-6">My Recipes</MudText>
+<MudStack Row="true">
+    <MudText Typo="Typo.h4" Class="mb-6">My Recipes</MudText>
+    <MudButton Color="@Color.Primary" IconClass="@Icons.Filled.AddTask" Variant="Variant.Outlined" OnClick="@(() => OpenDrawer(Anchor.End))">Add</MudButton>
+</MudStack>
+
 
 <MudGrid Spacing="4" Justify="Justify.FlexStart">
     @*-- Card Template --*@
@@ -62,6 +66,22 @@
         }
 
     }
+
+    <MudDrawer @bind-Open="@open" Anchor="@anchor" Elevation="1" Variant="@DrawerVariant.Temporary">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Add Recipe</MudText>
+        </MudDrawerHeader>
+        <MudGrid>
+            <MudItem>
+                <MudStack Row="true">
+
+                    @*ERIK ADD HTML HERE*@
+
+                    <MudInput  Variant="Variant.Outlined" T="string" Label="Name" />
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+    </MudDrawer>
 </MudGrid>
 
 
@@ -69,6 +89,8 @@
 @code{
 
     private List<Recipe> AllRecipes { get; set; } = new List<Recipe>();
+    private bool open;
+    private Anchor anchor;
 
     private void OpenRecipe(MouseEventArgs eventArgs)
     {
@@ -80,6 +102,18 @@
         base.OnInitialized();
 
         AllRecipes = dataService.GetRecipes();
+    }
+
+    void OpenDrawer(Anchor anchor)
+    {
+        open = true;
+        this.anchor = anchor;
+    }
+    void CloseDrawer()
+    {
+        open = false;
+        StateHasChanged();
+
     }
 
     private void OpenRecipe(string recipeId)

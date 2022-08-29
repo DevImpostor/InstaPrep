@@ -34,6 +34,7 @@
     <Content Remove="Pages\MyRecipesPage.razor" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Scrape\" />
   </ItemGroup>
 </Project>
