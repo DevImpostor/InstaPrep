@@ -77,6 +77,11 @@ namespace InstaPrep.Data
 
 
         }
+
+        public void AddRecipe(Recipe r)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
