@@ -22,6 +22,30 @@ namespace InstaPrep.Data
             "pound", "pounds"
         };
 
+        //Dictionary relating measurements to Measure Type (Volume, Weight)
+        private static Dictionary<string, (bool, bool)> MeasureTypes =
+            new Dictionary<string, (bool, bool)>()
+            {
+                { "cup", (true, false) }, {"cups", (true, false) },
+                { "can", (false, false) }, {"cans", (false, false) },
+                { "box", (false, false) }, {"boxes", (false, false) },
+                { "stick", (false, false) }, {"sticks", (false, false) },
+                { "sleeve", (false, false) }, {"sleeves", (false, false) },
+                { "tube", (false, false) }, {"tubes", (false, false) },
+                { "tbsp", (true, false) }, {"tbsps", (true, false) },
+                { "tbsp.", (true, false) }, { "tbsps.", (true, false) },
+                {"tablespoon", (true, false) }, {"tablespoons", (true, false) },
+                { "tsp", (true, false) }, {"tsps", (true, false) },
+                { "tsp.", (true, false) }, {"tsps.",(true, false) },
+                { "teaspoon", (true, false) }, {"teaspoons", (true, false) },
+                { "ounce", (false, true) }, {"oz.", (false, true) },
+                { "oz", (false, true) }, {"ounces", (false, true) },
+                { "gram", (false, true) }, {"grams", (false, true) },
+                { "lb", (false, true) }, {"lbs", (false, true) },
+                { "lb.", (false, true) }, {"lbs.", (false, true) },
+                { "pound", (false, true) }, {"pounds", (false, true) }
+            };
+
         private static Dictionary<string, float> Amounts = new Dictionary<string, float>()
         {
             {"1", 1.0f },
@@ -47,6 +71,20 @@ namespace InstaPrep.Data
         public static List<string> GetAmounts()
         {
             return Amounts.Keys.ToList();
+        }
+
+        public static (bool, bool) GetMeasurementType( string measure )
+        {
+            // Extremely weird logic here
+            foreach( var key in MeasureTypes.Keys)
+            {
+                if (measure.Contains(key))
+                {
+                    return MeasureTypes[key];
+                }
+            }
+
+            return (false, false);
         }
 
         public static List<string> GetMeasurements()
